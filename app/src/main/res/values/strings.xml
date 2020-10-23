@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">CarShop</string>
+    <string name="home">Inicio</string>
+    <string name="search">Buscar</string>
+    <string name="account">Cuenta</string>
+    <string name="add">Agregar</string>
+    <string name="addCategoria">Agregar categoria</string>
+    <string name="nomCategoria">Nombre de categoria</string>
+    <string name="cancel">Cancelar</string>
+    <string name="price">Precio</string>
+    <string name="model">Modelo</string>
+    <string name="Seating">Asientos</string>
+    <string name="state">Estado</string>
+    <string name="date">Fecha publicación</string>
+    <string name="categoria">Categoria</string>
+    <string name="bateria">Capacidad de bateria</string>
+    <string name="capacidad">Capacidad de espacio</string>
+    <string name="carga">Carga útil</string>
+</resources>
