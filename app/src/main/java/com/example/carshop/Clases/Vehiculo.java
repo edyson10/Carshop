@@ -7,7 +7,7 @@ public class Vehiculo {
     private String modelo;
     private int precio;
     private String estado;
-    private Date fecha_publicacion;
+    private String fecha_publicacion;
     private String categoria;
     private int asientos;
     private String otros;
@@ -15,7 +15,7 @@ public class Vehiculo {
     public Vehiculo() {
     }
 
-    public Vehiculo(String modelo, int precio, String estado, Date fecha_publicacion, String categoria, int asientos, String otros) {
+    public Vehiculo(String modelo, int precio, String estado, String fecha_publicacion, String categoria, int asientos, String otros) {
         this.modelo = modelo;
         this.precio = precio;
         this.estado = estado;
@@ -49,11 +49,11 @@ public class Vehiculo {
         this.estado = estado;
     }
 
-    public Date getFecha_publicacion() {
+    public String getFecha_publicacion() {
         return fecha_publicacion;
     }
 
-    public void setFecha_publicacion(Date fecha_publicacion) {
+    public void setFecha_publicacion(String fecha_publicacion) {
         this.fecha_publicacion = fecha_publicacion;
     }
 

@@ -16,4 +16,5 @@
     <string name="bateria">Capacidad de bateria</string>
     <string name="capacidad">Capacidad de espacio</string>
     <string name="carga">Carga útil</string>
+    <string name="addCar">Agregar vehiculo</string>
 </resources>

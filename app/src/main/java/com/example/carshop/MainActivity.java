@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.carshop.Adapter.Adapter_categoria;
 import com.example.carshop.Clases.Categorias;
+import com.example.carshop.Services.Servicios;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -63,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getApplicationContext(), "Le di clic a " +
+                //       listCategoria.get(recycler.getChildAdapterPosition(v)).getNombre(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), VehiculosActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Servicios.obtenerCategorias(this);
 
         add.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

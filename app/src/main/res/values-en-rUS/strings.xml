@@ -17,4 +17,5 @@
     <string name="capacidad">Space capacity</string>
     <string name="carga">Useful load</string>
     <string name="categoria">Category</string>
+    <string name="addCar">Add vehicle</string>
 </resources>

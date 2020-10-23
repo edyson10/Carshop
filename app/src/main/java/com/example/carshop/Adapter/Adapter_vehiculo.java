@@ -3,7 +3,6 @@ package com.example.carshop.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.carshop.Clases.Vehiculo;
@@ -34,8 +33,8 @@ public class Adapter_vehiculo extends RecyclerView.Adapter<Adapter_vehiculo.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolderVehiculo holder, int position) {
         holder.modelo.setText(listVehiculo.get(position).getModelo());
-        holder.precio.setText(listVehiculo.get(position).getPrecio());
-        holder.asientos.setText(listVehiculo.get(position).getAsientos());
+        holder.precio.setText(String.valueOf(listVehiculo.get(position).getPrecio()));
+        holder.asientos.setText(String.valueOf(listVehiculo.get(position).getAsientos()));
         holder.estado.setText(listVehiculo.get(position).getEstado());
         holder.fecha.setText((CharSequence) listVehiculo.get(position).getFecha_publicacion());
         holder.categoria.setText(listVehiculo.get(position).getCategoria());
