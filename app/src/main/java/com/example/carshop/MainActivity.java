@@ -5,15 +5,22 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +28,9 @@ import com.example.carshop.Adapter.Adapter_categoria;
 import com.example.carshop.Clases.Categorias;
 import com.example.carshop.Services.Servicios;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -31,21 +41,48 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recycler;
     Adapter_categoria adapter;
     Button add;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    TextView tituloToolbar;
+    ImageView btn_atras, flecha_atras;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         add = findViewById(R.id.btnAdd);
         bottomBar = findViewById(R.id.bottom_bar);
         recycler = (RecyclerView) findViewById(R.id.recyclerCategoria);
+        progressDialog = new ProgressDialog(MainActivity.this);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        /*
+        tituloToolbar = (TextView) findViewById(R.id.tvTitulo);
+        tituloToolbar.setText("CarShop");
+        btn_atras = (ImageView) findViewById(R.id.btn_atras_toolbar);
+        flecha_atras = (ImageView) findViewById(R.id.ic_flecha_retroceso);
+        btn_atras.setVisibility(View.INVISIBLE);
+        flecha_atras.setVisibility(View.INVISIBLE);
+         */
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.fondo_gradiente);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.white);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                llenarRecycler();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         listCategoria = new ArrayList<>();
         llenarRecycler();
+
         recycler.setLayoutManager(new GridLayoutManager(this, 2));
-        adapter = new Adapter_categoria(listCategoria);
+        adapter = new Adapter_categoria(listCategoria, MainActivity.this);
         recycler.setAdapter(adapter);
 
         bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Servicios.obtenerCategorias(this);
-
         add.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -92,9 +127,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void llenarRecycler() {
-        listCategoria.add(new Categorias(R.color.black, "Comercial"));
-        listCategoria.add(new Categorias(R.color.black, "Eléctrico"));
-        listCategoria.add(new Categorias(R.color.black, "Camión"));
+        ConnectivityManager con = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = con.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    progressDialog.setMessage("Cargando...");
+                    final String resultado = Servicios.obtenerCategorias();
+                    Log.e("TAGGGGGG ", resultado);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int r = Servicios.validarDatosJSON(resultado);
+                            if (r > 0) {
+                                cargarCategorias(resultado);
+                                adapter.notifyDataSetChanged();
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+                    progressDialog.hide();
+                }
+            };
+            thread.start();
+        } else {
+            Toast.makeText(this, "¡Verifique su conexión a internet!",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void cargarCategorias(String response) {
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Categorias categoria = new Categorias();
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                categoria.setFoto((R.color.black));
+                categoria.setNombre(jsonObject.getString("nombre"));
+                listCategoria.add(categoria);
+            }
+        } catch (Exception e) { }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -105,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog alertDialog = alert.create();
         alertDialog.show();
 
-        final EditText nombre, documento;
+        final EditText nombre;
         Button guardar;
         TextView cancelar;
 
@@ -128,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //listCustomer.add(new Customers(nombre.getText().toString(), documento.getText().toString(), R.drawable.person));
                     Toast.makeText(getApplicationContext(), "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+                    Servicios.crearCategoria(getApplicationContext(), nombre.getText().toString());
                     alertDialog.dismiss();
                 }
             }

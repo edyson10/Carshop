@@ -1,5 +1,6 @@
 package com.example.carshop.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ public class Adapter_categoria extends RecyclerView.Adapter<Adapter_categoria.Vi
 
     ArrayList<Categorias> listCategoria;
     private View.OnClickListener listener;
+    private Context context;
 
-    public Adapter_categoria (ArrayList<Categorias> listCategoria) {
+    public Adapter_categoria (ArrayList<Categorias> listCategoria, Context context) {
         this.listCategoria = listCategoria;
+        this.context = context;
     }
 
     @NonNull

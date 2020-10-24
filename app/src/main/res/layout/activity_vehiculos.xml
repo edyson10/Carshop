@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".VehiculosActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCar"
         android:layout_width="match_parent"
