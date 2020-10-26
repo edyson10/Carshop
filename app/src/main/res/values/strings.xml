@@ -17,4 +17,24 @@
     <string name="capacidad">Capacidad de espacio</string>
     <string name="carga">Carga útil</string>
     <string name="addCar">Agregar vehiculo</string>
+    <string name="update">Actualizar</string>
+    <string name="marca">Marca</string>
+    <string name="updateCar">Actualizar vehiculo</string>
+    <string name="listVehicule">Lista de vehiculos</string>
+    <string name="tipo">Tipo</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="loading">Cargando</string>
+    <string name="noDisponible">Opción no disponible</string>
+    <string name="failVehicule">No hay vehiculos en esa categoria</string>
+    <string name="failDataVehicule">Error al cargar los datos del vehiculo</string>
+    <string name="verificarConexion">¡Verifique su conexión a internet!</string>
+    <string name="completarCampos">Complete los campos</string>
+    <string name="registerOk">Se ha registrado correctamente</string>
+    <string name="modifyFail">No puedes editar la categoría Eléctrico</string>
+    <string name="updateOk">Se actualizó correctamente el vehículo</string>
+    <string name="updateFail">¡Error al actualizar!</string>
+    <string name="sureUpdate">¿Seguro deseas actualizar el vehiculo?</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="error">¡A ocurrido un error!</string>
 </resources>

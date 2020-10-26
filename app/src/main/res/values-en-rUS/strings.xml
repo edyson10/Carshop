@@ -5,8 +5,8 @@
     <string name="search">Search</string>
     <string name="account">Account</string>
     <string name="add">Add</string>
-    <string name="addCategoria">add category</string>
-    <string name="nomCategoria">category name</string>
+    <string name="addCategoria">Add category</string>
+    <string name="nomCategoria">Category name</string>
     <string name="cancel">Cancel</string>
     <string name="price">Price</string>
     <string name="model">Model</string>
@@ -18,4 +18,24 @@
     <string name="carga">Useful load</string>
     <string name="categoria">Category</string>
     <string name="addCar">Add vehicle</string>
+    <string name="update">Update</string>
+    <string name="marca">Brand</string>
+    <string name="updateCar">Update vehicle</string>
+    <string name="tipo">Type</string>
+    <string name="cantidad">Quantity</string>
+    <string name="loading">Loading</string>
+    <string name="noDisponible">Option not available</string>
+    <string name="failVehicule">There are no vehicles in that category</string>
+    <string name="failDataVehicule">Error loading vehicle data</string>
+    <string name="verificarConexion">Check your internet connection!</string>
+    <string name="completarCampos">Fill in the fields</string>
+    <string name="registerOk">You have successfully registered</string>
+    <string name="modifyFail">You cannot edit the Electrical category</string>
+    <string name="updateOk">Vehicle was successfully updated</string>
+    <string name="updateFail">Update failed!</string>
+    <string name="sureUpdate">Are you sure you want to update the vehicle?</string>
+    <string name="yes">Yes</string>
+    <string name="no">Not</string>
+    <string name="error">An error has occurred!</string>
+    <string name="listVehicule">Vehicle list</string>
 </resources>

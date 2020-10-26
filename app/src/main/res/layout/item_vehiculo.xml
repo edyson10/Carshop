@@ -14,16 +14,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:src="@color/fondo"/>
+            android:src="@drawable/auto"
+            android:background="#797c79"/>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="4dp"
@@ -33,7 +34,8 @@
                 android:text="@string/model"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"/>
+                android:layout_weight="0.7"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txtModelo"
                 android:layout_width="fill_parent"
@@ -43,7 +45,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
@@ -52,7 +54,8 @@
                 android:text="@string/price"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"/>
+                android:layout_weight="0.7"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txtPrecio"
                 android:layout_width="fill_parent"
@@ -62,7 +65,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
@@ -71,7 +74,8 @@
                 android:text="@string/Seating"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"/>
+                android:layout_weight="0.7"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txtAsientos"
                 android:layout_width="fill_parent"
@@ -81,7 +85,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
@@ -90,7 +94,8 @@
                 android:text="@string/state"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"/>
+                android:layout_weight="0.7"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txtEstado"
                 android:layout_width="fill_parent"
@@ -100,7 +105,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
@@ -109,7 +114,8 @@
                 android:text="@string/date"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"/>
+                android:layout_weight="0.7"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txtFecha"
                 android:layout_width="fill_parent"
@@ -119,38 +125,40 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:orientation="horizontal">
             <TextView
-                android:text="@string/bateria"
+                android:text="@string/categoria"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"/>
+                android:layout_weight="0.7"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txtCateVehiculo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
-                android:text="37,9 kWh"/>
+                android:text="Eléctrico"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/txtOtros"
+                android:id="@+id/txtTipo"
                 android:text="@string/bateria"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"/>
+                android:layout_weight="0.7"
+                android:textStyle="bold"/>
             <TextView
-                android:id="@+id/txtOtros2"
+                android:id="@+id/txtCantidad"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"

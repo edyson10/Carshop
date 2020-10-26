@@ -41,45 +41,34 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recycler;
     Adapter_categoria adapter;
     Button add;
-    private SwipeRefreshLayout swipeRefreshLayout;
     TextView tituloToolbar;
     ImageView btn_atras, flecha_atras;
-
+    String resultado;
+    int validar;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //getSupportActionBar().hide();
+        getSupportActionBar().hide();
 
         add = findViewById(R.id.btnAdd);
         bottomBar = findViewById(R.id.bottom_bar);
         recycler = (RecyclerView) findViewById(R.id.recyclerCategoria);
         progressDialog = new ProgressDialog(MainActivity.this);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        /*
         tituloToolbar = (TextView) findViewById(R.id.tvTitulo);
-        tituloToolbar.setText("CarShop");
+        tituloToolbar.setText(R.string.app_name);
         btn_atras = (ImageView) findViewById(R.id.btn_atras_toolbar);
         flecha_atras = (ImageView) findViewById(R.id.ic_flecha_retroceso);
         btn_atras.setVisibility(View.INVISIBLE);
         flecha_atras.setVisibility(View.INVISIBLE);
-         */
-
-        swipeRefreshLayout.setColorSchemeResources(R.color.fondo_gradiente);
-        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.white);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                llenarRecycler();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
 
         listCategoria = new ArrayList<>();
-        llenarRecycler();
+        progressDialog.setMessage("Cargando...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        cargarCategoriasGET();
 
         recycler.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new Adapter_categoria(listCategoria, MainActivity.this);
@@ -90,13 +79,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
-                        mostrarToast("Pulsada opción 1");
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.search:
-                        mostrarToast("Pulsada opción 2");
-                        break;
                     case R.id.account:
-                        mostrarToast("Pulsada opción 3");
+                        mostrarToast("Opción no disponible");
                         break;
                 }
                 return true;
@@ -106,10 +94,16 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "Le di clic a " +
-                //       listCategoria.get(recycler.getChildAdapterPosition(v)).getNombre(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), VehiculosActivity.class);
-                startActivity(intent);
+                int posicion = listCategoria.get(recycler.getChildAdapterPosition(v)).getId_categria();
+                resultado = Servicios.cargarVehiculoCategoria(posicion);
+                validar = Servicios.validarDatosJSON(resultado);
+                if (validar < 0) {
+                    Toast.makeText(getApplicationContext(), R.string.failVehicule, Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), VehiculosActivity.class);
+                    intent.putExtra("id_categoria", listCategoria.get(recycler.getChildAdapterPosition(v)).getId_categria());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -126,43 +120,42 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
 
-    public void llenarRecycler() {
+    public void cargarCategoriasGET() {
         ConnectivityManager con = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = con.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             Thread thread = new Thread() {
                 @Override
                 public void run() {
-                    progressDialog.setMessage("Cargando...");
-                    final String resultado = Servicios.obtenerCategorias();
-                    Log.e("TAGGGGGG ", resultado);
+                    resultado = Servicios.obtenerCategorias();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            int r = Servicios.validarDatosJSON(resultado);
-                            if (r > 0) {
-                                cargarCategorias(resultado);
-                                adapter.notifyDataSetChanged();
+                            validar = Servicios.validarDatosJSON(resultado);
+                            if (validar > 0) {
                                 progressDialog.dismiss();
+                                llenarRecycler(resultado);
+                                adapter.notifyDataSetChanged();
                             }
                         }
                     });
-                    progressDialog.hide();
+                    //progressDialog.hide();
                 }
             };
             thread.start();
         } else {
-            Toast.makeText(this, "¡Verifique su conexión a internet!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.verificarConexion,Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void cargarCategorias(String response) {
+    public void llenarRecycler(String response) {
         try {
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
                 Categorias categoria = new Categorias();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                categoria.setFoto((R.color.black));
+                categoria.setFoto((R.drawable.bmw));
+                categoria.setId_categria(Integer.parseInt(jsonObject.getString("id_categoria")));
                 categoria.setNombre(jsonObject.getString("nombre"));
                 listCategoria.add(categoria);
             }
@@ -196,12 +189,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (nombre.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Complete los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.completarCampos, Toast.LENGTH_SHORT).show();
                 } else {
-                    //listCustomer.add(new Customers(nombre.getText().toString(), documento.getText().toString(), R.drawable.person));
-                    Toast.makeText(getApplicationContext(), "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.registerOk, Toast.LENGTH_SHORT).show();
                     Servicios.crearCategoria(getApplicationContext(), nombre.getText().toString());
                     alertDialog.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
             }
         });

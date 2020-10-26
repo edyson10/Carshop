@@ -1,28 +1,38 @@
 package com.example.carshop.Clases;
 
-import java.util.Date;
-
 public class Vehiculo {
 
+    private int id_vehiculo;
     private String modelo;
     private int precio;
     private String estado;
     private String fecha_publicacion;
     private String categoria;
     private int asientos;
-    private String otros;
+    private String tipo;
+    private String cantidad;
 
     public Vehiculo() {
     }
 
-    public Vehiculo(String modelo, int precio, String estado, String fecha_publicacion, String categoria, int asientos, String otros) {
+    public Vehiculo(int id_vehiculo, String modelo, int precio, String estado, String fecha_publicacion, String categoria, int asientos, String tipo, String cantidad) {
+        this.id_vehiculo = id_vehiculo;
         this.modelo = modelo;
         this.precio = precio;
         this.estado = estado;
         this.fecha_publicacion = fecha_publicacion;
         this.categoria = categoria;
         this.asientos = asientos;
-        this.otros = otros;
+        this.tipo = tipo;
+        this.cantidad = cantidad;
+    }
+
+    public int getId_vehiculo() {
+        return id_vehiculo;
+    }
+
+    public void setId_vehiculo(int id_vehiculo) {
+        this.id_vehiculo = id_vehiculo;
     }
 
     public String getModelo() {
@@ -73,11 +83,19 @@ public class Vehiculo {
         this.asientos = asientos;
     }
 
-    public String getOtros() {
-        return this.otros;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setOtros(String otros) {
-        this.otros = otros;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
     }
 }
