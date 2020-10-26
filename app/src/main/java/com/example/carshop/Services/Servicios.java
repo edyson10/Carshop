@@ -42,7 +42,7 @@ public class Servicios {
         String linea = "";
         int respuesta = 0;
         StringBuilder resul = null;
-        String url_aws = URL_LOCAL + "listarCategoria.php";
+        String url_aws = URL_AWS + "listarCategoria.php";
 
         try {
             url = new URL(url_aws);
@@ -65,7 +65,7 @@ public class Servicios {
     public static void crearCategoria(final Context context, final String nombre) {
 
         queue = Volley.newRequestQueue(context);
-        String urlEnvio = Servicios.URL_AWS + "crearCategoria.php";
+        String urlEnvio = URL_AWS + "crearCategoria.php";
 
         JSONObject jsonObject = new JSONObject();
         try {
